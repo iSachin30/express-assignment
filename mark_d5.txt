@@ -1,0 +1,51 @@
+const http = require('http');
+const port = 8080;
+var fs = require('fs')
+  , fm = require('front-matter')
+a1 = [];
+const server = http.createServer((req,res)=>{
+    res.statusCode = 200
+    res.setHeader('Content-type', 'text/html');
+    fs.readdir('./data/section-1/', function(err, filenames) {
+        if (err) throw err
+        var i = 0;
+        filenames.forEach(function(filename) {
+          fs.readFile('./data/section-1/' + filename, 'utf-8', function(err, content) {
+            if (err) throw err
+            var data = fm(content)
+            a1[i] = data.attributes
+            
+            var data = fm(content)
+            //var filter1 = data.attributes
+        
+            res.end(`<table>
+                        <tr>
+                        <th>Relevance</th> </tr>
+                        <tr><td>${a1[i]["Relevance"]}</td>
+                        </tr> </table> `);
+            i++;
+          })})
+
+          console.log(a1[0])
+        })
+    //var a = readFiles('./data/section-1/');
+    
+});
+server.listen(port, ()=> {
+    console.log(`Server is on:${port}`);
+});
+
+// function readFiles(dirname) {
+  
+    
+//         //return filter1;
+        
+//         // var table2 = document.querySelector("#mytab");
+        
+        
+//       });
+
+//     });
+//   });
+// }
+// readFiles();
